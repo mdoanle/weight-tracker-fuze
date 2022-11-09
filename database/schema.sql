@@ -5,3 +5,11 @@ set client_min_messages to warning;
 drop schema "public" cascade;
 
 create schema "public";
+
+CREATE TABLE "public"."entriesTest" (
+	"weight" TEXT NOT NULL,
+	"date" DATE NOT NULL UNIQUE,
+	"entryId" serial NOT NULL UNIQUE
+) WITH (
+  OIDS=FALSE
+);
