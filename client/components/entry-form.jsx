@@ -31,26 +31,22 @@ export default class EntryForm extends React.Component {
       body: JSON.stringify(this.state)
     };
     fetch('/api/entriesTest', req)
-      .then(res => res.json())
-      .then(result => {
-        // eslint-disable-next-line no-console
-        console.log(result);
-      });
+      .then(res => res.json());
   }
 
   render() {
     const { handleChange, handleSubmit } = this;
     return (
-      <Container className='mt-5'>
-        <Row>
+      <Container className='mt-3'>
+        <Row className='mb-3'>
           <h1>New Entry</h1>
         </Row>
-        <Row>
-          <Card className='fw100'>
+        <Row style={{ height: '50vh' }} className='m-3'>
+          <Card className='h-auto'>
             <Card.Body>
               <Form onSubmit = {handleSubmit}>
                 <Form.Group className="mb-3">
-                  <Form.Label>Weight</Form.Label>
+                  <Form.Label>Weight:</Form.Label>
                   <Form.Control
                   type="number"
                   required
@@ -60,7 +56,7 @@ export default class EntryForm extends React.Component {
                   onChange={handleChange}/>
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label>Date</Form.Label>
+                  <Form.Label>Date:</Form.Label>
                   <Form.Control
                   type="date"
                   required
@@ -68,9 +64,11 @@ export default class EntryForm extends React.Component {
                   name='date'
                   onChange={handleChange}/>
                 </Form.Group>
-                <Button variant="primary" type="submit" className="float-right">
-                  Submit
-                </Button>
+                <Row style={{ height: '25vh' }}>
+                  <Button variant="primary" type="submit" className="align-self-end">
+                    Submit
+                  </Button>
+                </Row>
               </Form>
             </Card.Body>
           </Card>

@@ -7,7 +7,7 @@ export default class NavBar extends React.Component {
     return (
       <Navbar bg="primary" variant="dark">
         <Container>
-          <Navbar.Brand href="#home" className='ms-3'>Navbar</Navbar.Brand>
+          <Navbar.Brand href="#home" className='ms-3'>WeightTrackerFuze</Navbar.Brand>
         </Container>
       </Navbar>
     );

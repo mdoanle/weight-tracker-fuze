@@ -26,6 +26,8 @@ app.post('/api/entriesTest', (req, res, next) => {
   const { weight, date } = req.body;
   if (!weight || !date) {
     throw new ClientError(400, 'weight and date are required fields');
+  } else if (isNaN(weight)) {
+    throw new ClientError(400, 'Weight must be a number!');
   }
   const sql = `
     insert into "entriesTest" ("weight", "date")
