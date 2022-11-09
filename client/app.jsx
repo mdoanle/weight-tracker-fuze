@@ -1,8 +1,15 @@
 import React from 'react';
-import Home from './pages/home';
+import NavBar from './components/navbar';
+import EntryForm from './components/entry-form';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class App extends React.Component {
   render() {
-    return <Home />;
+    return (
+      <>
+        <NavBar/>
+        <EntryForm/>
+      </>
+    );
   }
 }
