@@ -31,7 +31,10 @@ export default class EntryForm extends React.Component {
       body: JSON.stringify(this.state)
     };
     fetch('/api/entriesTest', req)
-      .then(res => res.json());
+      .then(res => res.json())
+      .then(result => {
+        window.location.hash = 'home';
+      });
   }
 
   render() {
