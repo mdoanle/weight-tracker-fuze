@@ -14,7 +14,7 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/entriesTest')
+    fetch('/api/entries')
       .then(res => res.json())
       .then(entries => this.setState({ entries }));
   }
