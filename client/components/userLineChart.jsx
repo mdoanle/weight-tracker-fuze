@@ -1,7 +1,6 @@
 import { Line } from 'react-chartjs-2';
 import React from 'react';
-// eslint-disable-next-line no-unused-vars
-import Chart from 'chart.js/auto';
+import 'chart.js/auto';
 
 export default class LineChart extends React.Component {
   constructor(props) {
@@ -10,11 +9,10 @@ export default class LineChart extends React.Component {
       chartData: {},
       isLoading: true
     };
-    this.getChartData = this.getChartData.bind(this);
   }
 
   getChartData() {
-    fetch('/api/entries')
+    fetch('/api/entries?order=date')
       .then(res => res.json())
       .then(data => {
         const chartData = data;
@@ -25,8 +23,8 @@ export default class LineChart extends React.Component {
           const modDate = date.split('T');
           const finalDate = modDate[0];
           const labelDate = finalDate.split('-').splice(1, 2).join('-');
-          dates.unshift(labelDate);
-          weights.unshift(element.weight);
+          dates.push(labelDate);
+          weights.push(element.weight);
         });
         this.setState(
           {
