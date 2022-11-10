@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import LineChart from '../components/userLineChart';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -11,12 +12,15 @@ export default class Home extends React.Component {
     this.state = {
       entries: []
     };
+
   }
 
   componentDidMount() {
-    fetch('/api/entriesTest')
+    fetch('/api/entries')
       .then(res => res.json())
-      .then(entries => this.setState({ entries }));
+      .then(entries => {
+        this.setState({ entries });
+      });
   }
 
   render() {
@@ -24,6 +28,9 @@ export default class Home extends React.Component {
       <Container>
         <Row>
           <h1 className='text-center mt-3'>Welcome!</h1>
+        </Row>
+        <Row className='mb-5'>
+          <LineChart/>
         </Row>
         <Row>
           <Col>
