@@ -28,13 +28,13 @@ app.get('/api/entries', (req, res, next) => {
   if (req.query.order === 'date') {
     sql = `
       select *
-      from "entriesTest"
+      from "entries"
       order by "date" ASC
   `;
   } else {
     sql = `
       select *
-      from "entriesTest"
+      from "entries"
       order by "date" DESC
   `;
   }
@@ -53,7 +53,7 @@ app.post('/api/entries', uploadsMiddleware, (req, res, next) => {
   }
   const url = `/images/${req.file.filename}`;
   const sql = `
-    insert into "entriesTest" ("weight", "date", "photoUrl")
+    insert into "entries" ("weight", "date", "photoUrl")
     values ($1, $2, $3)
     returning *
   `;

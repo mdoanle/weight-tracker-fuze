@@ -19,6 +19,10 @@ export default class EntryForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentWillUnmount() {
+    URL.revokeObjectURL(this.state.file);
+  }
+
   handleChange(event) {
     const { name, value } = event.target;
     if (name === 'file' && event.target.files.length !== 0) {
