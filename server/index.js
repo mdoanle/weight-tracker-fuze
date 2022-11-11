@@ -4,6 +4,7 @@ const pg = require('pg');
 const express = require('express');
 const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
+const uploadsMiddleware = require('./uploads-middleware');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -43,19 +44,20 @@ app.get('/api/entries', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/entries', (req, res, next) => {
+app.post('/api/entries', uploadsMiddleware, (req, res, next) => {
   const { weight, date } = req.body;
   if (!weight || !date) {
     throw new ClientError(400, 'weight and date are required fields');
   } else if (isNaN(weight)) {
     throw new ClientError(400, 'Weight must be a number!');
   }
+  const url = `/images/${req.file.filename}`;
   const sql = `
-    insert into "entriesTest" ("weight", "date")
-    values ($1, $2)
+    insert into "entriesTest" ("weight", "date", "photoUrl")
+    values ($1, $2, $3)
     returning *
   `;
-  const params = [weight, date];
+  const params = [weight, date, url];
   db.query(sql, params)
     .then(result => {
       res.status(201).json(result.rows);

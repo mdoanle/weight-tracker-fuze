@@ -4,47 +4,62 @@ import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Image from 'react-bootstrap/Image';
 
 export default class EntryForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       weight: '',
-      date: ''
+      date: '',
+      file: null
     };
+    this.fileInputRef = React.createRef();
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    if (name === 'file' && event.target.files.length !== 0) {
+      this.setState({
+        [name]: URL.createObjectURL(event.target.files[0])
+      });
+    } else {
+      this.setState({ [name]: value });
+    }
   }
 
   handleSubmit(event) {
     event.preventDefault();
+    const formData = new FormData();
+    formData.append('weight', this.state.weight);
+    formData.append('date', this.state.date);
+    formData.append('image', this.fileInputRef.current.files[0]);
     const req = {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.state)
+      body: formData
     };
     fetch('/api/entries', req)
       .then(res => res.json())
       .then(result => {
         window.location.hash = 'home';
+        this.setState({
+          date: '',
+          weight: ''
+        });
+        this.fileInputRef.current.value = null;
       });
   }
 
   render() {
     const { handleChange, handleSubmit } = this;
     return (
-      <Container className='mt-3'>
+      <Container className='mt-3 mx-xl-5' style={{ width: '100%' }}>
         <Row className='mb-3'>
           <h1>New Entry</h1>
         </Row>
-        <Row style={{ height: '50vh' }} className='m-3'>
+        <Row style={{ height: '50vh' }} className='m-3 justify-content-center'>
           <Card className='h-auto'>
             <Card.Body>
               <Form onSubmit = {handleSubmit}>
@@ -67,7 +82,27 @@ export default class EntryForm extends React.Component {
                   name='date'
                   onChange={handleChange}/>
                 </Form.Group>
-                <Row style={{ height: '25vh' }}>
+                <Row className='mt-5'>
+                  <Form.Group controlId='formFile'>
+                    <Row className='justify-content-center'>
+                      <Image
+                      style={{ height: 400, width: 400 }}
+                      className='h-auto'
+                      src={this.state.file === null || this.state.file === '' ? 'https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg' : this.state.file}
+                      thumbnail='true'
+                      />
+                    </Row>
+                    <Form.Label className='mt-5 d-block'>Upload Photo:</Form.Label>
+                    <Form.Control
+                  type='file'
+                  name='file'
+                  ref={this.fileInputRef}
+                  accept=".png, .jpg, .jpeg"
+                  onChange = {this.handleChange}
+                  />
+                  </Form.Group>
+                </Row>
+                <Row style={{ height: '15vh' }}>
                   <Button variant="primary" type="submit" className="align-self-end">
                     Submit
                   </Button>

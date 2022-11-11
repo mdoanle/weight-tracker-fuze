@@ -9,7 +9,8 @@ create schema "public";
 CREATE TABLE "public"."entriesTest" (
 	"weight" TEXT NOT NULL,
 	"date" DATE NOT NULL UNIQUE,
-	"entryId" serial NOT NULL UNIQUE
+	"entryId" serial NOT NULL UNIQUE,
+  "photoUrl" TEXT UNIQUE
 ) WITH (
   OIDS=FALSE
 );
