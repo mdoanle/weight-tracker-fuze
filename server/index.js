@@ -22,18 +22,28 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.static(publicPath));
 app.use(express.json());
 
-app.get('/api/entriesTest', (req, res, next) => {
-  const sql = `
-  select *
-  from "entriesTest"
-  order by "date" DESC
+app.get('/api/entries', (req, res, next) => {
+  let sql;
+  if (req.query.order === 'date') {
+    sql = `
+      select *
+      from "entriesTest"
+      order by "date" ASC
   `;
+  } else {
+    sql = `
+      select *
+      from "entriesTest"
+      order by "date" DESC
+  `;
+  }
+
   db.query(sql)
     .then(result => res.json(result.rows))
     .catch(err => next(err));
 });
 
-app.post('/api/entriesTest', (req, res, next) => {
+app.post('/api/entries', (req, res, next) => {
   const { weight, date } = req.body;
   if (!weight || !date) {
     throw new ClientError(400, 'weight and date are required fields');
