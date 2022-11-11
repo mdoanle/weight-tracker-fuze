@@ -6,10 +6,11 @@ drop schema "public" cascade;
 
 create schema "public";
 
-CREATE TABLE "public"."entriesTest" (
+CREATE TABLE "public"."entries" (
 	"weight" TEXT NOT NULL,
 	"date" DATE NOT NULL UNIQUE,
-	"entryId" serial NOT NULL UNIQUE
+	"entryId" serial NOT NULL UNIQUE,
+  "photoUrl" TEXT UNIQUE
 ) WITH (
   OIDS=FALSE
 );
