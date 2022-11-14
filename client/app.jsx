@@ -4,6 +4,8 @@ import NewEntry from './pages/new-entry';
 import NavBar from './components/navbar';
 import parseRoute from './lib/parse-route';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -35,8 +37,12 @@ export default class App extends React.Component {
   render() {
     return (
       <>
-        <NavBar/>
-        {this.renderPage()}
+        <NavBar fluid/>
+        <Row className='justify-content-center'>
+          <Col xxl={8} xl={8} l={8} m={8}>
+            {this.renderPage()}
+          </Col>
+        </Row>
       </>
     );
   }

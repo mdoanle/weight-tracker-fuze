@@ -55,7 +55,7 @@ export default class LineChart extends React.Component {
     return (
       <Line
           width={25}
-          height={15}
+          height={10}
           data={this.state.chartData}
         />
     );

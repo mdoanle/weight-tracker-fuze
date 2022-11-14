@@ -51,18 +51,32 @@ app.post('/api/entries', uploadsMiddleware, (req, res, next) => {
   } else if (isNaN(weight)) {
     throw new ClientError(400, 'Weight must be a number!');
   }
-  const url = `/images/${req.file.filename}`;
-  const sql = `
+  const imageUrl = req.file?.filename ?? null;
+  let sql;
+  let params;
+  if (imageUrl === null) {
+    sql = `
     insert into "entries" ("weight", "date", "photoUrl")
     values ($1, $2, $3)
     returning *
-  `;
-  const params = [weight, date, url];
+    `;
+    params = [weight, date, imageUrl];
+  } else {
+    const url = `/images/${req.file.filename}`;
+    sql = `
+    insert into "entries" ("weight", "date", "photoUrl")
+    values ($1, $2, $3)
+    returning *
+    `;
+    params = [weight, date, url];
+  }
   db.query(sql, params)
     .then(result => {
       res.status(201).json(result.rows);
     })
-    .catch(err => next(err));
+    .catch(err => {
+      next(err);
+    });
 
 });
 
