@@ -59,7 +59,7 @@ export default class EntryForm extends React.Component {
   render() {
     const { handleChange, handleSubmit } = this;
     return (
-      <Container className='mt-3 mx-xl-5' style={{ width: '100%' }}>
+      <Container className='mt-3'>
         <Row className='mb-3'>
           <h1>New Entry</h1>
         </Row>
@@ -92,7 +92,7 @@ export default class EntryForm extends React.Component {
                       <Image
                       style={{ height: 400, width: 400 }}
                       className='h-auto'
-                      src={this.state.file === null || this.state.file === '' ? 'https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg' : this.state.file}
+                        src={this.state.file === null || this.state.file === '' ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png' : this.state.file}
                       thumbnail='true'
                       />
                     </Row>

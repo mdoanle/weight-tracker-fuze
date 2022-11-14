@@ -10,7 +10,7 @@ CREATE TABLE "public"."entries" (
 	"weight" TEXT NOT NULL,
 	"date" DATE NOT NULL UNIQUE,
 	"entryId" serial NOT NULL UNIQUE,
-  "photoUrl" TEXT UNIQUE
+  "photoUrl" TEXT
 ) WITH (
   OIDS=FALSE
 );
