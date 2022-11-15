@@ -66,44 +66,43 @@ export default class EntryForm extends React.Component {
         <Row style={{ height: '50vh' }} className='m-3 justify-content-center'>
           <Card className='h-auto'>
             <Card.Body>
-              <Form onSubmit = {handleSubmit}>
+              <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Label>Weight:</Form.Label>
                   <Form.Control
-                  type="number"
-                  required
-                  placeholder="Enter Weight"
-                  name='weight'
-                  step='0.1'
-                  onChange={handleChange}/>
+                    type="number"
+                    required
+                    placeholder="Enter Weight"
+                    name='weight'
+                    step='0.1'
+                    onChange={handleChange} />
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Date:</Form.Label>
                   <Form.Control
-                  type="date"
-                  required
-                  placeholder="Select a Date"
-                  name='date'
-                  onChange={handleChange}/>
+                    type="date"
+                    required
+                    name='date'
+                    onChange={handleChange} />
                 </Form.Group>
                 <Row className='mt-5'>
                   <Form.Group controlId='formFile'>
                     <Row className='justify-content-center'>
                       <Image
-                      style={{ height: 400, width: 400 }}
-                      className='h-auto'
-                        src={this.state.file === null || this.state.file === '' ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png' : this.state.file}
-                      thumbnail='true'
+                        style={{ height: 400, width: 400 }}
+                        className='h-auto'
+                        src={this.state.file === null || this.state.file === '' ? 'images/placeholder.png' : this.state.file}
+                        thumbnail='true'
                       />
                     </Row>
                     <Form.Label className='mt-5 d-block'>Upload Photo:</Form.Label>
                     <Form.Control
-                  type='file'
-                  name='file'
-                  ref={this.fileInputRef}
-                  accept=".png, .jpg, .jpeg"
-                  onChange = {this.handleChange}
-                  />
+                      type='file'
+                      name='file'
+                      ref={this.fileInputRef}
+                      accept=".png, .jpg, .jpeg, .HEIC"
+                      onChange={this.handleChange}
+                    />
                   </Form.Group>
                 </Row>
                 <Row style={{ height: '15vh' }}>
