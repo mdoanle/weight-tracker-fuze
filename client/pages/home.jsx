@@ -49,9 +49,11 @@ export default class Home extends React.Component {
       method: 'DELETE'
     };
     fetch(`/api/entries/${deleting}`, req)
-      .then(res => res.json());
-    this.setState({ entries: stateCopy, deleting: null });
-    this.hideDelete();
+      .then(res => res.json())
+      .then(() => {
+        this.setState({ entries: stateCopy, deleting: null });
+        this.hideDelete();
+      });
   }
 
   componentDidMount() {
