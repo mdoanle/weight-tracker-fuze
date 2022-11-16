@@ -9,6 +9,7 @@ export default class LineChart extends React.Component {
       chartData: {},
       isLoading: true
     };
+    this.getChartData = this.getChartData.bind(this);
   }
 
   getChartData() {
@@ -36,7 +37,7 @@ export default class LineChart extends React.Component {
                 label: 'Weight',
                 borderColor: '#3333ff',
                 fill: false,
-                lineTension: 0.5,
+                lineTension: 0.3,
                 pointRadius: 5,
                 pointBackgroundColor: '#000000'
               }
@@ -50,6 +51,12 @@ export default class LineChart extends React.Component {
     this.getChartData();
   }
 
+  componentDidUpdate(prevState) {
+    if (this.state.chartData !== prevState.chartData) {
+      this.getChartData();
+    }
+  }
+
   render() {
     if (this.state.isLoading) return null;
     return (
@@ -57,6 +64,9 @@ export default class LineChart extends React.Component {
           width={25}
           height={10}
           data={this.state.chartData}
+          options={{
+            animation: false
+          }}
         />
     );
   }
