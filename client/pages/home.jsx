@@ -46,8 +46,7 @@ export default class Home extends React.Component {
     const numDeleting = Number(deleting);
     const stateCopy = entries.filter(entry => entry.entryId !== numDeleting);
     const req = {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' }
+      method: 'DELETE'
     };
     fetch(`/api/entries/${deleting}`, req)
       .then(res => res.json());
