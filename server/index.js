@@ -80,6 +80,22 @@ app.post('/api/entries', uploadsMiddleware, (req, res, next) => {
 
 });
 
+app.delete('/api/entries/:entryId', (req, res, next) => {
+  const entryId = Number(req.params.entryId);
+  const sql = `
+    delete from "entries"
+      where "entryId" = $1
+  `;
+  const params = [entryId];
+  db.query(sql, params)
+    .then(result => {
+      res.status(201).json(result.rows);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

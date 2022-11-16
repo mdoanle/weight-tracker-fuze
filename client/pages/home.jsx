@@ -13,19 +13,46 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       entries: [],
-      seeModal: false,
+      seeLightbox: false,
+      seeDelete: false,
+      deleting: null,
       lightboxImage: null
     };
-    this.showModal = this.showModal.bind(this);
-    this.hideModal = this.hideModal.bind(this);
+    this.showLightbox = this.showLightbox.bind(this);
+    this.hideLightbox = this.hideLightbox.bind(this);
+    this.showDelete = this.showDelete.bind(this);
+    this.hideDelete = this.hideDelete.bind(this);
+    this.deleteEntry = this.deleteEntry.bind(this);
   }
 
-  showModal(event) {
-    this.setState({ seeModal: true, lightboxImage: event.target.getAttribute('src') });
+  showLightbox(event) {
+    this.setState({ seeLightbox: true, lightboxImage: event.target.getAttribute('src'), seeDelete: false });
   }
 
-  hideModal() {
-    this.setState({ seeModal: false });
+  showDelete(event) {
+    this.setState({ seeDelete: true, deleting: event.target.getAttribute('id') });
+  }
+
+  hideLightbox() {
+    this.setState({ seeLightbox: false });
+  }
+
+  hideDelete() {
+    this.setState({ seeDelete: false });
+  }
+
+  deleteEntry() {
+    const { deleting, entries } = this.state;
+    const numDeleting = Number(deleting);
+    const stateCopy = entries.filter(entry => entry.entryId !== numDeleting);
+    const req = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' }
+    };
+    fetch(`/api/entries/${deleting}`, req)
+      .then(res => res.json());
+    this.setState({ entries: stateCopy, deleting: null });
+    this.hideDelete();
   }
 
   componentDidMount() {
@@ -39,11 +66,23 @@ export default class Home extends React.Component {
   render() {
     return (
       <Container>
-        <Modal show={this.state.seeModal} onHide={this.hideModal} centered>
+        <Modal show={this.state.seeLightbox} onHide={this.hideLightbox} centered>
           <Modal.Header closeButton/>
           <Modal.Body>
             <Row>
               <Image src={this.state.lightboxImage}/>
+            </Row>
+          </Modal.Body>
+        </Modal>
+
+        <Modal show={this.state.seeDelete} onHide={this.hideDelete} backdrop='static' centered>
+          <Modal.Body>
+            <Row className='justify-content-center'>
+              <h3 className='d-flex justify-content-center'>You Sure Fam?</h3>
+              <Row style={{ width: '50%' }}>
+                <Button variant="danger" className='mb-2' onClick={this.deleteEntry}>Delete</Button>
+                <Button variant="primary" onClick={this.hideDelete}>Close</Button>
+              </Row>
             </Row>
           </Modal.Body>
         </Modal>
@@ -70,7 +109,8 @@ export default class Home extends React.Component {
                     <div key={entry.date}>
                       <Entry
                       entry={entry}
-                      showModal={this.showModal}
+                      showLightbox={this.showLightbox}
+                      showDelete={this.showDelete}
                       />
                     </div>
                   ))
@@ -84,7 +124,7 @@ export default class Home extends React.Component {
 }
 
 function Entry(props) {
-  const { weight, date, photoUrl } = props.entry;
+  const { weight, date, photoUrl, entryId } = props.entry;
   const modDate = date.split('T');
   const finalDate = modDate[0];
   return (
@@ -106,10 +146,15 @@ function Entry(props) {
         <Row>
           <Image
           fluid
-          onClick={props.showModal}
+          onClick={props.showLightbox}
           style={{ objectFit: 'contain', height: '100px', width: '100px' }}
           src={photoUrl === null ? 'images/placeholder.png' : photoUrl}
           role='button'/>
+        </Row>
+      </Col>
+      <Col className='d-flex justify-content-center' style={{ width: '50%' }}>
+        <Row className='align-items-center' style={{ height: '100%' }}>
+          <i onClick={props.showDelete} className="fa-solid fa-xmark" id={entryId} />
         </Row>
       </Col>
     </Row>

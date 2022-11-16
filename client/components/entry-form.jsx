@@ -100,7 +100,7 @@ export default class EntryForm extends React.Component {
                       type='file'
                       name='file'
                       ref={this.fileInputRef}
-                      accept=".png, .jpg, .jpeg, .HEIC"
+                      accept=".png, .jpg, .jpeg"
                       onChange={this.handleChange}
                     />
                   </Form.Group>

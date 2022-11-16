@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 export default function NewEntry(props) {
   return (
     <Row className='justify-content-center'>
-      <Col xl={8}>
+      <Col>
         <EntryForm />
       </Col>
     </Row>
