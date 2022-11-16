@@ -89,7 +89,7 @@ app.delete('/api/entries/:entryId', (req, res, next) => {
   const params = [entryId];
   db.query(sql, params)
     .then(result => {
-      res.status(201).json(result.rows);
+      res.status(200).json(result.rows);
     })
     .catch(err => {
       next(err);
