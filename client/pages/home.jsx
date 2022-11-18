@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import LineChart from '../components/userLineChart';
 import Image from 'react-bootstrap/Image';
 import Modal from 'react-bootstrap/Modal';
+import NavBar from '../components/navbar';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -66,60 +67,67 @@ export default class Home extends React.Component {
 
   render() {
     return (
-      <Container>
-        <Modal show={this.state.seeLightbox} onHide={this.hideLightbox} centered>
-          <Modal.Header closeButton/>
-          <Modal.Body>
-            <Row>
-              <Image src={this.state.lightboxImage}/>
-            </Row>
-          </Modal.Body>
-        </Modal>
-
-        <Modal show={this.state.seeDelete} onHide={this.hideDelete} backdrop='static' centered>
-          <Modal.Body>
-            <Row className='justify-content-center'>
-              <h3 className='d-flex justify-content-center'>You Sure Fam?</h3>
-              <Row style={{ width: '50%' }}>
-                <Button variant="danger" className='mb-2' onClick={this.deleteEntry}>Delete</Button>
-                <Button variant="primary" onClick={this.hideDelete}>Close</Button>
-              </Row>
-            </Row>
-          </Modal.Body>
-        </Modal>
-
-        <Row>
-          <h1 className='text-center mt-3'>Welcome!</h1>
-        </Row>
-        <Row className='mb-5 justify-content-center'>
-          <LineChart/>
-        </Row>
+      <>
+        <NavBar/>
         <Row className='justify-content-center'>
-          <Col>
-            <h2>Entries:</h2>
-          </Col>
-          <Col>
-            <Button variant='primary' className='float-end' href='#entry'>New Entry</Button>
+          <Col xxl={8} xl={8} lg={8} md={8}>
+            <Container>
+              <Modal show={this.state.seeLightbox} onHide={this.hideLightbox} centered>
+                <Modal.Header closeButton/>
+                <Modal.Body>
+                  <Row>
+                    <Image src={this.state.lightboxImage}/>
+                  </Row>
+                </Modal.Body>
+              </Modal>
+
+              <Modal show={this.state.seeDelete} onHide={this.hideDelete} backdrop='static' centered>
+                <Modal.Body>
+                  <Row className='justify-content-center'>
+                    <h3 className='d-flex justify-content-center'>You Sure Fam?</h3>
+                    <Row style={{ width: '50%' }}>
+                      <Button variant="danger" className='mb-2' onClick={this.deleteEntry}>Delete</Button>
+                      <Button variant="primary" onClick={this.hideDelete}>Close</Button>
+                    </Row>
+                  </Row>
+                </Modal.Body>
+              </Modal>
+
+              <Row>
+                <h1 className='text-center mt-3'>Welcome!</h1>
+              </Row>
+              <Row className='mb-5 justify-content-center'>
+                <LineChart/>
+              </Row>
+              <Row className='justify-content-center'>
+                <Col>
+                  <h2>Entries:</h2>
+                </Col>
+                <Col>
+                  <Button variant='primary' className='float-end' href='#entry'>New Entry</Button>
+                </Col>
+              </Row>
+              <Row className='m-3 justify-content-center'>
+                <Card>
+                  <Card.Body>
+                    {
+                    this.state.entries.map(entry => (
+                      <div key={entry.date}>
+                        <Entry
+                        entry={entry}
+                        showLightbox={this.showLightbox}
+                        showDelete={this.showDelete}
+                        />
+                      </div>
+                    ))
+                  }
+                  </Card.Body>
+                </Card>
+              </Row>
+            </Container>
           </Col>
         </Row>
-        <Row className='m-3 justify-content-center'>
-          <Card>
-            <Card.Body>
-              {
-                  this.state.entries.map(entry => (
-                    <div key={entry.date}>
-                      <Entry
-                      entry={entry}
-                      showLightbox={this.showLightbox}
-                      showDelete={this.showDelete}
-                      />
-                    </div>
-                  ))
-                }
-            </Card.Body>
-          </Card>
-        </Row>
-      </Container>
+      </>
     );
   }
 }

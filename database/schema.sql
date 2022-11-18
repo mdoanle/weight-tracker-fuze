@@ -6,11 +6,30 @@ drop schema "public" cascade;
 
 create schema "public";
 
-CREATE TABLE "public"."entries" (
-	"weight" TEXT NOT NULL,
-	"date" DATE NOT NULL UNIQUE,
-	"entryId" serial NOT NULL UNIQUE,
-  "photoUrl" TEXT
+CREATE TABLE "public"."users" (
+	"username" TEXT NOT NULL UNIQUE,
+	"userId" serial NOT NULL UNIQUE,
+	"hashedPassword" TEXT NOT NULL UNIQUE,
+	"joinedAt" serial NOT NULL UNIQUE,
+	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
 ) WITH (
   OIDS=FALSE
 );
+
+
+
+CREATE TABLE "public"."entries" (
+	"weight" int NOT NULL,
+	"date" DATE NOT NULL UNIQUE,
+	"userId" serial NOT NULL UNIQUE,
+	"entryId" serial NOT NULL UNIQUE,
+	"photoUrl" TEXT UNIQUE,
+	CONSTRAINT "entries_pk" PRIMARY KEY ("entryId")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+
+ALTER TABLE "entries" ADD CONSTRAINT "entries_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
