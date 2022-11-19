@@ -36,13 +36,18 @@ export default class EntryForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    const token = window.localStorage.getItem('react-context-jwt');
     const formData = new FormData();
     formData.append('weight', this.state.weight);
     formData.append('date', this.state.date);
     formData.append('image', this.fileInputRef.current.files[0]);
     const req = {
       method: 'POST',
+      headers: {
+        'x-access-token': token
+      },
       body: formData
+
     };
     fetch('/api/entries', req)
       .then(res => res.json())

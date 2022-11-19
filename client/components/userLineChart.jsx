@@ -13,7 +13,14 @@ export default class LineChart extends React.Component {
   }
 
   getChartData() {
-    fetch('/api/entries?order=date')
+    const token = window.localStorage.getItem('react-context-jwt');
+    const req = {
+      method: 'GET',
+      headers: {
+        'x-access-token': token
+      }
+    };
+    fetch('/api/entries?order=date', req)
       .then(res => res.json())
       .then(data => {
         const chartData = data;

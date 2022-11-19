@@ -21,6 +21,7 @@ export default class Landing extends React.Component {
     this.openSignUp = this.openSignUp.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
+    this.handleLogIn = this.handleLogIn.bind(this);
   }
 
   handleChange(event) {
@@ -54,6 +55,28 @@ export default class Landing extends React.Component {
       });
   }
 
+  handleLogIn(event) {
+    event.preventDefault();
+    const { username, password } = this.state;
+    const req = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username,
+        password
+      })
+    };
+    fetch('/api/users/sign-in', req)
+      .then(res => res.json())
+      .then(result => {
+        if (result.user && result.token) {
+          this.context.handleSignIn(result);
+        }
+      });
+  }
+
   closeSignIn() {
     this.setState({
       showSignIn: false
@@ -79,6 +102,12 @@ export default class Landing extends React.Component {
   }
 
   render() {
+    const { user } = this.context;
+
+    if (user) {
+      window.location.hash = 'home';
+    }
+
     return (
       <div className='bg-image'>
         <Container fluid style={{ height: '100vh', width: '100vw' }}>
@@ -88,7 +117,7 @@ export default class Landing extends React.Component {
               <Modal.Title>Login</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Form>
+              <Form onSubmit={this.handleLogIn}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Username</Form.Label>
                   <Form.Control type="text" placeholder="Enter username" name='username' onChange={this.handleChange} />
