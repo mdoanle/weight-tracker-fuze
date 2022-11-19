@@ -8,6 +8,7 @@ import LineChart from '../components/userLineChart';
 import Image from 'react-bootstrap/Image';
 import Modal from 'react-bootstrap/Modal';
 import NavBar from '../components/navbar';
+import AppContext from '../lib/app-context';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -179,3 +180,5 @@ function Entry(props) {
     </Row>
   );
 }
+
+Home.contextType = AppContext;

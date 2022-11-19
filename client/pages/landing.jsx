@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
+import AppContext from '../lib/app-context';
 
 export default class Landing extends React.Component {
   constructor(props) {
@@ -177,3 +178,5 @@ export default class Landing extends React.Component {
     );
   }
 }
+
+Landing.contextType = AppContext;
