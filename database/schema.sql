@@ -10,7 +10,7 @@ CREATE TABLE "public"."users" (
 	"username" TEXT NOT NULL UNIQUE,
 	"userId" serial NOT NULL UNIQUE,
 	"hashedPassword" TEXT NOT NULL UNIQUE,
-	"joinedAt" serial NOT NULL UNIQUE,
+	"joinedAt" timestamp with time zone not null default now() NOT NULL UNIQUE,
 	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
 ) WITH (
   OIDS=FALSE
@@ -19,9 +19,9 @@ CREATE TABLE "public"."users" (
 
 
 CREATE TABLE "public"."entries" (
-	"weight" int NOT NULL,
+	"weight" NUMERIC NOT NULL,
 	"date" DATE NOT NULL UNIQUE,
-	"userId" serial NOT NULL UNIQUE,
+	"userId" serial NOT NULL,
 	"entryId" serial NOT NULL UNIQUE,
 	"photoUrl" TEXT UNIQUE,
 	CONSTRAINT "entries_pk" PRIMARY KEY ("entryId")

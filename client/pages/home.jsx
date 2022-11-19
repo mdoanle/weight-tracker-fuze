@@ -8,6 +8,7 @@ import LineChart from '../components/userLineChart';
 import Image from 'react-bootstrap/Image';
 import Modal from 'react-bootstrap/Modal';
 import NavBar from '../components/navbar';
+import AppContext from '../lib/app-context';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -45,9 +46,13 @@ export default class Home extends React.Component {
   deleteEntry() {
     const { deleting, entries } = this.state;
     const numDeleting = Number(deleting);
+    const token = window.localStorage.getItem('react-context-jwt');
     const stateCopy = entries.filter(entry => entry.entryId !== numDeleting);
     const req = {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token
+      }
     };
     fetch(`/api/entries/${deleting}`, req)
       .then(res => res.json())
@@ -58,7 +63,13 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/entries')
+    const token = window.localStorage.getItem('react-context-jwt');
+    const req = {
+      headers: {
+        'x-access-token': token
+      }
+    };
+    fetch('/api/entries', req)
       .then(res => res.json())
       .then(entries => {
         this.setState({ entries });
@@ -169,3 +180,5 @@ function Entry(props) {
     </Row>
   );
 }
+
+Home.contextType = AppContext;
