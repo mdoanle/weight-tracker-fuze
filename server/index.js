@@ -122,7 +122,7 @@ app.post('/api/entries', uploadsMiddleware, (req, res, next) => {
   } else if (isNaN(weight)) {
     throw new ClientError(400, 'Weight must be a number!');
   }
-  const imageUrl = req.file?.filename ?? null;
+  const imageUrl = req.file?.location ?? null;
   let sql;
   let params;
   if (imageUrl === null) {
@@ -133,10 +133,10 @@ app.post('/api/entries', uploadsMiddleware, (req, res, next) => {
     `;
     params = [weight, date, imageUrl, userId];
   } else {
-    const url = `/images/${req.file.filename}`;
+    const url = req.file.location;
     sql = `
     insert into "entries" ("weight", "date", "photoUrl", "userId")
-    values ($1, $2, $3)
+    values ($1, $2, $3, $4)
     returning *
     `;
     params = [weight, date, url, userId];
