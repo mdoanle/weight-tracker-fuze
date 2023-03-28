@@ -18,4 +18,4 @@ As someone who personally has gone on a weight loss journey before, I found that
 
 ## Demo
 
-- Try the application live at
+- Try the application live at [weighttrackerfuze.mdoanle.com/](weighttrackerfuze.mdoanle.com/)
