@@ -19,3 +19,11 @@ As someone who personally has gone on a weight loss journey before, I found that
 ## Demo
 
 - Try the application live at [weighttrackerfuze.mdoanle.com/](weighttrackerfuze.mdoanle.com/)
+
+## Features
+
+- User can create an account
+- User can log in
+- User can create a weight entry
+- User can upload a current photo
+- User can see a graph of their progress
